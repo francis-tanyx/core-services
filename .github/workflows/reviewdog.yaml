@@ -37,7 +37,7 @@ jobs:
             python3 -m pip install pycodestyle
         - name: Install hadolint
           env:
-            HADOLINT_VERSION: v2.12.0
+            HADOLINT_VERSION: v1.16.3
           run: |
             wget -q https://github.com/hadolint/hadolint/releases/download/$HADOLINT_VERSION/hadolint-Linux-x86_64 -O ./bin/hadolint \
             && chmod +x ./bin/hadolint

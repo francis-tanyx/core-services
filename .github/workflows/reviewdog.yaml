@@ -2,6 +2,7 @@ name: reviewdog
 on: 
   pull_request:
     types: [opened, synchronize, reopened]
+  push:
 permissions:
   contents: read
 
@@ -13,11 +14,11 @@ jobs:
       pull-requests: write
     steps:
         - name: Checkout code
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             ref: ${{ github.event.pull_request.head.sha }}
         - name: Install go
-          uses: actions/setup-go@v4
+          uses: actions/setup-go@v5.3.0
           with:
             go-version: '1.20'
         - name: Install golangci-lint
@@ -36,7 +37,7 @@ jobs:
             python3 -m pip install pycodestyle
         - name: Install hadolint
           env:
-            HADOLINT_VERSION: v1.16.3
+            HADOLINT_VERSION: v2.12.0
           run: |
             wget -q https://github.com/hadolint/hadolint/releases/download/$HADOLINT_VERSION/hadolint-Linux-x86_64 -O ./bin/hadolint \
             && chmod +x ./bin/hadolint
@@ -50,7 +51,7 @@ jobs:
           run: |
             mkdir -p "$PWD"/scan_results
             ./bin/reviewdog -conf .github/.reviewdogConfig.yml -reporter=github-pr-check
-        - uses: actions/upload-artifact@v3
+        - uses: actions/upload-artifact@v4.6.1
           with:
             name: scan_results
             path: ${{ github.workspace }}/scan_results/

@@ -7,6 +7,7 @@ runner:
     level: info # (optional. same as -level flag. [info,warning,error])
   hadolint:
     cmd: 'find . -type f -name Dockerfile | xargs ./bin/hadolint -c .github/.hadolint.yaml -f json | jq -f ".github/.rdjson.jq" -c | tee "$PWD"/scan_results/hadolintResults.txt'
+    
     format: rdjson
     level: error # (optional. same as -level flag. [info,warning,error])
   shellcheck:
